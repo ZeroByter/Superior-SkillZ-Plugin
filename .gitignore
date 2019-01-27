@@ -1,0 +1,6 @@
+*.cmd
+*.json
+other folder
+*.exe
+*.ico
+node_modules

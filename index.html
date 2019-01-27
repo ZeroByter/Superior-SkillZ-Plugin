@@ -1,0 +1,54 @@
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+
+<script src="/socket.io/socket.io.js"></script>
+<script>
+	var socket = io()
+</script>
+
+<style>
+	#socketStatus{
+		position: absolute;
+		top: 10px;
+		width: 100%;
+		text-align: center;
+		color: red;
+	}
+</style>
+
+<span id="socketStatus"></span>
+<center style="margin-top: 100px;">
+	<p>
+		<h1>Thanks for using <a href="https://github.com/ZeroByter" target="_blank">ZeroByter's</a> SkillZ Plugin!</h1>
+		<h4 style="color:rgba(0, 0, 0, 0.15);">You probably didn't have any other choice...</h4>
+		<br><br>
+		<p><b>It's a lot easier for me to write in English, so... sorry. >:)</b></p>
+		<p>You can throw this into Google Translate if you want...</p>
+	</p>
+</center>
+<div class="container">
+	<div class="row">
+		<div class="col-lg-8 offset-lg-2" style="text-align: center;">
+			<br><br><br>
+			<p>
+				<h2>Why?</h2>
+				<p>I got really tired of having to use SkillZ shitty plugin which crashed way too often, and when it did work, it worked horribly. So I made my own!</p>
+			</p>
+			<br><br><br>
+			<p>
+				<h2>What's different?</h2>
+				<ul style="text-align: left;">
+					<li>No crashes</li>
+					<li>No more annoying update spams when updating files</li>
+					<li>Actually supports folders (seriously it wasn't <i>that</i> hard to implement). Simply place the exe at the root of your IDE files and work as normal!</li>
+				</ul>
+			</p>
+		</div>
+	</div>
+</div>
+
+<script>
+	if(typeof io !== "function"){
+		$("#socketStatus").html("Socket.io server is not running yet! You must complete the first-time setup for it to work!");
+	}
+</script>

@@ -9,7 +9,11 @@ This plugin software provided by the SkillZ team is outdated, crashes often, and
 
 ## Usage
 
-Usage of this new replacement plugin is almost identical to the old one. In order to get the software to work initially, you have to go to chrome, navigate to [https://localhost:50000](https://localhost:50000) and authorize Chrome (or whatever browser you are using) to ignore the wrong SSL certificate warning.
+Usage of this new replacement plugin is almost identical to the old one.
+
+First, you must place the '.exe' file at the root directory of your project.
+
+Then, likewise with the original webkit plugin, you have to go to chrome, navigate to [https://localhost:50000](https://localhost:50000) and authorize Chrome (or whatever browser you are using) to ignore the wrong SSL certificate warning, and you're set!
 
 Once you do that, you won't have to do it again, and you may work on your bot in peace.
 

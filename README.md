@@ -5,7 +5,7 @@ A better, superior SkillZ webkit plugin meant to replace the original, malfuncti
 
 A lot of young and inspired coders (including myself) who are taking part in the Israeli national coding competition SkillZ are dependent on a software provided by the SkillZ team in order to work on their bot in their own familiar IDE workstation while still being able to reliably upload their code to the webkit for testing.
 
-This plugin software provided by the SkillZ team is outdated, crashes often, and when it does work it barely does; and so I have decided to take matters into my own hands...
+This plugin software provided by the SkillZ team is outdated, crashes often, and when it does work it works very badly and slows down productivity; and so I have decided to take matters into my own hands...
 
 ## Usage
 
@@ -25,3 +25,8 @@ If you wish to run this raw script yourself, you need:
 - node-watch
 - socket.io
 - express
+
+## Contribution
+
+I more than welcome any and all contributions to the code. It is open-source, after all.
+Just send a pull-request, and I will take a look!

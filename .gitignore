@@ -4,3 +4,4 @@ other folder
 *.exe
 *.ico
 node_modules
+bundle.js

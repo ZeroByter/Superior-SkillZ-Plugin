@@ -17,16 +17,17 @@ const rl = readline.createInterface({
 	output: process.stdout
 });
 
-var usableFileEndings = "none";
+//var usableFileEndings = "none";
+var config = {}
 
 function AskUsedLanguage(){
 	rl.question("What language do you code in? (possible options: py/cs/js/java) ", (answer) => {
 		if(answer === "py" || answer === "cs" || answer === "js" || answer === "java"){
-			usableFileEndings = "." + answer;
+			//write new config
+			config = {language: answer}
+			fs.writeFileSync("./config.json", JSON.stringify(config), {flag: "w"})
 
 			StartServer()
-
-			fs.writeFileSync("./config.json", JSON.stringify({language: answer}), {flag: "w"})
 		}else{
 			console.log("That is not a correct language/file ending!");
 			AskUsedLanguage();
@@ -43,9 +44,7 @@ var httpsServer = https.createServer(credentials, app);
 httpsServer.listen(50000);
 
 if(fs.existsSync("./config.json")){
-	var config = JSON.parse(fs.readFileSync("./config.json"))
-
-	usableFileEndings = "." + config.language
+	config = JSON.parse(fs.readFileSync("./config.json"))
 
 	StartServer();
 }else{
@@ -66,7 +65,7 @@ app.get("/", function(req, res){
 })
 
 function StartServer(){
-	console.log("Using language '" + usableFileEndings + "' files")
+	console.log("Using language '" + config.language + "' files")
 
 	var watcher = watch(".", {recursive: true})
 
@@ -91,25 +90,26 @@ function StartServer(){
 	function UploadFiles(){
 		var filesData = {}
 
-		var allFilePaths = walkSync("./", usableFileEndings)
+		var allFilePaths = walkSync("./", `.${config.language}`)
 		allFilePaths.forEach(function(filePath){
-			//console.log(`${filePath}: ${fs.readFileSync(filePath, 'utf8')}`)
 			var fileName = path.basename(filePath)
-			filesData[fileName] = fs.readFileSync(filePath, 'utf8')
+			if(!fileName.startsWith("TemporaryGeneratedFile_") && fileName !== "AssemblyInfo.cs"){
+				filesData[fileName] = fs.readFileSync(filePath, 'utf8')
+			}
 		})
 
-		io.sockets.connected[currentId].emit("upLoadDir", filesData)
+		io.emit("upLoadDir", filesData)
 	}
 
 	var currentId;
 	var enableFileWatcher = true;
 
 	watcher.on("change", function(event, filename){
-		if(enableFileWatcher && filename.endsWith(usableFileEndings)){
+		if(enableFileWatcher && filename.endsWith(`.${config.language}`)){
 			//if the user is still connected
-			if(io.sockets.connected.hasOwnProperty(currentId)){
-				UploadFiles()
-			}
+			console.log("Detected file change, uploading to webkit...");
+
+			UploadFiles()
 			
 			enableFileWatcher = false;
 
@@ -130,11 +130,23 @@ function StartServer(){
 		currentId = socket.id
 		
 		//emit to user the current dir
-		io.sockets.connected[currentId].emit("showDirs", {dirs: ["Source (location of the .exe)"]})
+		io.emit("showDirs", {dirs: ["Source (location of the .exe)"]})
+
+		//emit the config data
+		io.emit("GetConfig", config);
+
+		//if the web client has set a new language
+		socket.on("SetLanguage", function(data){
+			config.language = data;
+			fs.writeFileSync("./config.json", JSON.stringify(config), {flag: "w"})
+
+			console.log("Now using language '" + config.language + "' files")
+		})
 
 		//once the user confirms the dir he chose, we send it back to him
 		socket.on("dirWasSet", function(data){
-			io.sockets.connected[currentId].emit("dirWasSet", {dirName: [JSON.parse(data).dirName]})
+			//io.sockets.connected[currentId].emit("dirWasSet", {dirName: [JSON.parse(data).dirName]})
+			io.emit("dirWasSet", {dirName: [JSON.parse(data).dirName]})
 		})
 
 		//here the user chooses whether to upload or download the code, we handle these events

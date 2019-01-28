@@ -14,6 +14,26 @@
 		text-align: center;
 		color: red;
 	}
+
+	#center{
+		width: fit-content;
+		margin: auto;
+		height: 50px;
+	}
+
+	#socketConfig{
+		margin-top: 50px;
+	}
+
+	.configText{
+		float: left;
+		margin-top: 5px;
+	}
+	.configSelect{
+		width: 300px;
+		float: left;
+		margin-left: 20px;
+	}
 </style>
 
 <span id="socketStatus"></span>
@@ -45,10 +65,41 @@
 			</p>
 		</div>
 	</div>
+	<div id="socketConfig" class="row" style="display: none;">
+		<div class="col-lg-8 offset-lg-2" style="text-align: center;">
+			<div id="center">
+				<h3>Config:</h3>
+				<p>You shouldn't really need to change this...</p>
+				<br>
+
+				<span class="configText">Current coding language: </span>
+				<select id="currentLanguage" class="custom-select configSelect">
+					<option value="py">Python</option>
+					<option value="cs">C#</option>
+					<option value="java">Java</option>
+					<option value="js">JavaScript</option>
+				</select>
+			</div>
+		</div>
+	</div>
 </div>
+
+<!--padding-->
+<br><br><br><br><br><br><br><br>
 
 <script>
 	if(typeof io !== "function"){
 		$("#socketStatus").html("Socket.io server is not running yet! You must complete the first-time setup for it to work!");
+	}else{ //we are connected to the socket.io server...
+		socket.on("GetConfig", function(data){
+			$("#currentLanguage").val(data.language)
+		})
+
+		$("#socketConfig").css("display", "block");
+
+		$("#currentLanguage").on("change", function(){
+			//console.log($("#currentLanguage").val())
+			socket.emit("SetLanguage", $("#currentLanguage").val())
+		})
 	}
 </script>

@@ -5,3 +5,4 @@ other folder
 *.ico
 node_modules
 bundle.js
+yarn.lock

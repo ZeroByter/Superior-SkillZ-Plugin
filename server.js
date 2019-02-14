@@ -12,15 +12,13 @@ const getDirectories = source =>
     .map(name => path.join(source, name))
     .filter(isDirectory);
 
-//setup certificates
-const privateKey =
-  "-----BEGIN RSA PRIVATE KEY-----\nMIICXAIBAAKBgQDHuz6myrzBGVkcxPhYU8kPHSoie9+pTPOKChmBiuoaFjsPfZii\nnlea0WxNC91NWekR9MubJ1cXJlq4/6gphGbwZmR3iwVwW9nNLXGCxUSxCSDbgay7\neMci4O/hLfF4SSp9ZA2fTfXpMuAiVZGFMsOvvIeytut240t9o90OXz7iSQIDAQAB\nAoGAUTZ5yyg0h+/epCwTLxcicdrR/yOPVi/L9x0UMfBiMClJ6oqPPdBUnsb42nsw\niPs+Ieb/wx7D8s3NpduObRNBJ1Xn1rRA5klxoF0/aKF4gssKJxBHnAL884DahF+D\ni0f850Ky+/xgsZXidOS1RCflRknGFvCtsJ0kApdKQvHQ4mECQQD9S2cXSrrYKTD6\n3J+jEUXKz+cC5MtmFM9HtxLukZLMJ3R+j6RuUONFU33mVK8T2Z972cutmTHG8t/W\n9PNv9hf7AkEAyd1hpbAn2bCrbOpyJmq2cv2MaW2rkkO/mWUF8nHadtyddWru0E5G\nWFZbWsYWyDWg0uPY1I4gbJ0sLcXOlGgHiwJAMD/gz2sI1IxkLCVCs4lixhN8aeyz\nYiqsoXiaPp+0WvdZFZK/O9RktpwE649OGnXmD22ZguQfu0ogoY3foYA7aQJBAMMR\nHOUhfsDMCjurqjcZc8lW3jKa+erTcPjoOID6KGQn+DiY5sGAglWmzYzAUw+RUyG3\nb7amyQpsL17kASZECNUCQAcjn5CeYUS5Qo48n3acsyzM0ljW2v2MtWNAPCJgkRZt\nE7TA+f7UQ0I/nwN7zLG8tKiT9yqCxaLEUOnauxQc1KU=\n-----END RSA PRIVATE KEY-----";
-const certificate =
-  "-----BEGIN CERTIFICATE-----\nMIICATCCAWoCCQCMoU6Sw9HYRjANBgkqhkiG9w0BAQsFADBFMQswCQYDVQQGEwJB\nVTETMBEGA1UECAwKU29tZS1TdGF0ZTEhMB8GA1UECgwYSW50ZXJuZXQgV2lkZ2l0\ncyBQdHkgTHRkMB4XDTE3MDkwNDEzNDc1MFoXDTE4MDkwNDEzNDc1MFowRTELMAkG\nA1UEBhMCQVUxEzARBgNVBAgMClNvbWUtU3RhdGUxITAfBgNVBAoMGEludGVybmV0\nIFdpZGdpdHMgUHR5IEx0ZDCBnzANBgkqhkiG9w0BAQEFAAOBjQAwgYkCgYEAx7s+\npsq8wRlZHMT4WFPJDx0qInvfqUzzigoZgYrqGhY7D32Yop5XmtFsTQvdTVnpEfTL\nmydXFyZauP+oKYRm8GZkd4sFcFvZzS1xgsVEsQkg24Gsu3jHIuDv4S3xeEkqfWQN\nn0316TLgIlWRhTLDr7yHsrbrduNLfaPdDl8+4kkCAwEAATANBgkqhkiG9w0BAQsF\nAAOBgQBNaRc76ptzHbQw+Pnrz5Yt0pgGDer3S88fuMpQqrgr6wKRE0zSiYh0Vz4S\nDo5LRC+T60/kAQkcKJK5oD3/T2X22Vfxu8iiOSceobjK97Bs3zxoaNzBYQX6nOtY\nfoW7kf5paa3WvsZAJa2yn70J1QnC7xrJxkUB8JA3T6w4xY+GUw==\n-----END CERTIFICATE-----\n";
+// Setup certificates
+const key = fs.readFileSync("./SSL/file.pem").toString();
+const cert = fs.readFileSync("./SSL/file.crt").toString();
 
-const credentials = { key: privateKey, cert: certificate };
+const credentials = { key, cert };
 
-//setup readline
+// Setup readline
 const rl = readline.createInterface({
   input: process.stdin,
   output: process.stdout

@@ -1,105 +1,192 @@
-<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
-<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>ZeroByter's Skillz Plugin</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
 
-<script src="/socket.io/socket.io.js"></script>
-<script>
-	var socket = io()
-</script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+      var socket = io();
+    </script>
 
-<style>
-	#socketStatus{
-		position: absolute;
-		top: 10px;
-		width: 100%;
-		text-align: center;
-		color: red;
-	}
+    <style>
+      .clearfix::after {
+        content: "";
+        clear: both;
+        display: table;
+      }
 
-	#center{
-		width: fit-content;
-		margin: auto;
-		height: 50px;
-	}
+      span.bold {
+        font-weight: bold;
+      }
 
-	#socketConfig{
-		margin-top: 50px;
-	}
+      .hero {
+        margin: 5rem 0 0;
+        text-align: center;
+      }
 
-	.configText{
-		float: left;
-		margin-top: 5px;
-	}
-	.configSelect{
-		width: 300px;
-		float: left;
-		margin-left: 20px;
-	}
-</style>
+      .container {
+        margin-top: 5rem;
+      }
 
-<span id="socketStatus"></span>
-<center style="margin-top: 100px;">
-	<p>
-		<h1>Thanks for using <a href="https://github.com/ZeroByter" target="_blank">ZeroByter's</a> SkillZ Plugin!</h1>
-		<h4 style="color:rgba(0, 0, 0, 0.15);">You probably didn't have any other choice...</h4>
-		<br><br>
-		<p><b>It's a lot easier for me to write in English, so... sorry. >:)</b></p>
-		<p>You can throw this into Google Translate if you want...</p>
-	</p>
-</center>
-<div class="container">
-	<div class="row">
-		<div class="col-lg-8 offset-lg-2" style="text-align: center;">
-			<br><br><br>
-			<p>
-				<h2>Why?</h2>
-				<p>I got really tired of having to use SkillZ shitty plugin which crashed way too often, and when it did work, it worked horribly. So I made my own!</p>
-			</p>
-			<br><br><br>
-			<p>
-				<h2>What's different?</h2>
-				<ul style="text-align: left;">
-					<li>No crashes</li>
-					<li>No more annoying update spams when updating files</li>
-					<li>Actually supports folders (seriously it wasn't <i>that</i> hard to implement). Simply place the exe at the root of your IDE files and work as normal!</li>
-				</ul>
-			</p>
-		</div>
-	</div>
-	<div id="socketConfig" class="row" style="display: none;">
-		<div class="col-lg-8 offset-lg-2" style="text-align: center;">
-			<div id="center">
-				<h3>Config:</h3>
-				<p>You shouldn't really need to change this...</p>
-				<br>
+      .block {
+        display: block;
+        margin: 2rem 0;
+      }
 
-				<span class="configText">Current coding language: </span>
-				<select id="currentLanguage" class="custom-select configSelect">
-					<option value="py">Python</option>
-					<option value="cs">C#</option>
-					<option value="java">Java</option>
-					<option value="js">JavaScript</option>
-				</select>
-			</div>
-		</div>
-	</div>
-</div>
+      .center {
+        text-align: center;
+        width: 50%;
+        margin-left: auto;
+        margin-right: auto;
+      }
 
-<!--padding-->
-<br><br><br><br><br><br><br><br>
+      #socketStatus {
+        position: absolute;
+        top: 10px;
+        width: 100%;
+        text-align: center;
+        color: red;
+      }
 
-<script>
-	if(typeof io !== "function"){
-		$("#socketStatus").html("Socket.io server is not running yet! You must complete the first-time setup for it to work!");
-	}else{ //we are connected to the socket.io server...
-		socket.on("GetConfig", function(data){
-			$("#currentLanguage").val(data.language)
-		})
+      #socketConfig {
+        margin-top: 5rem;
+      }
 
-		$("#socketConfig").css("display", "block");
+      #socketConfig .option .configText {
+        float: left;
+        margin-top: 5px;
+      }
 
-		$("#currentLanguage").on("change", function(){
-			//console.log($("#currentLanguage").val())
-			socket.emit("SetLanguage", $("#currentLanguage").val())
-		})
-	}
-</script>
+      #socketConfig .option .configSelect {
+        width: 300px;
+        float: left;
+        margin-left: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <span id="socketStatus"></span>
+
+    <div class="hero">
+      <h1>
+        Thanks for using
+        <a href="https://github.com/ZeroByter" target="_blank">ZeroByter's</a>
+        SkillZ Plugin!
+      </h1>
+      <h4 style="color:rgba(0, 0, 0, 0.15);">
+        You probably didn't have any other choice...
+      </h4>
+      <p>
+        <span class="bold">
+          It's a lot easier for me to write in English, so... sorry. >:)
+        </span>
+        <br />
+        You can throw this into Google Translate if you want...
+      </p>
+    </div>
+
+    <div class="container">
+      <div class="row">
+        <div class="block center">
+          <h2>Why?</h2>
+          <p>
+            I got really tired of having to use SkillZ shitty plugin which
+            crashed way too often, and when it did work, it worked horribly. So
+            I made my own!
+          </p>
+        </div>
+
+        <div class="block center">
+          <h2>What's different?</h2>
+          <ul style="text-align: left;">
+            <li>No crashes</li>
+            <li>No more annoying update spams when updating files</li>
+            <li>
+              Actually supports folders (seriously it wasn't <i>that</i> hard to
+              implement). Simply place the exe at the root of your IDE files and
+              work as normal!
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div id="socketConfig" class="row" style="display: none;">
+        <div class="center">
+          <h3>Config:</h3>
+          <p>You shouldn't really need to change this...</p>
+
+          <div class="option clearfix">
+            <span class="configText">Current coding language: </span>
+            <select id="currentLanguage" class="custom-select configSelect">
+              <option value="py">Python</option>
+              <option value="cs">C#</option>
+              <option value="java">Java</option>
+              <option value="js">JavaScript</option>
+            </select>
+          </div>
+
+          <div class="option clearfix">
+            <span class="configText">Current folder: </span>
+            <select id="currentFolder" class="custom-select configSelect">
+              <option value="src">Source (location of the .exe)</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      if (typeof io !== "function") {
+        document.querySelector("#socketStatus").innerHTML =
+          "Socket.io server is not running yet! You must complete the first-time setup for it to work!";
+      } else {
+        socket.on("showDirs", data => {
+          const select = document.querySelector("#currentFolder");
+          const [, ...dirs] = data.dirs;
+
+          dirs.forEach(dir => {
+            const elem = document.createElement("option");
+            elem.value = dir;
+            elem.textContent = dir;
+            select.appendChild(elem);
+          });
+        });
+
+        socket.on("GetConfig", data => {
+          document.querySelector("#currentLanguage").value = data.language;
+          document.querySelector("#currentFolder").value = data.directory;
+        });
+
+        document.querySelector("#socketConfig").style.display = "block";
+
+        document
+          .querySelector("#currentLanguage")
+          .addEventListener("change", () => {
+            socket.emit(
+              "SetLanguage",
+              document.querySelector("#currentLanguage").value
+            );
+          });
+
+        document
+          .querySelector("#currentFolder")
+          .addEventListener("change", () => {
+            const currentFolderSelect = document.querySelector(
+              "#currentFolder"
+            );
+            const dataToSend = JSON.stringify({
+              dirName: currentFolderSelect.value
+            });
+
+            socket.emit("dirWasSet", dataToSend);
+          });
+      }
+    </script>
+  </body>
+</html>

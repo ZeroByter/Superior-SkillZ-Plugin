@@ -2,6 +2,7 @@
 *.json
 other folder
 *.exe
+*-linux
 *.ico
 node_modules
 bundle.js

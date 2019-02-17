@@ -87,9 +87,7 @@ function StartServer() {
   const watcher = watch(`./${config.directory}`, { recursive: true });
 
   const walkSync = function(dir, fileEnding, filelist) {
-    const path = path || require("path");
-    const fs = fs || require("fs"),
-      files = fs.readdirSync(dir);
+    files = fs.readdirSync(dir);
     filelist = filelist || [];
     files.forEach(function(file) {
       if (fs.statSync(path.join(dir, file)).isDirectory()) {
@@ -107,7 +105,7 @@ function StartServer() {
     let filesData = {};
 
     const allFilePaths = walkSync(
-      `./${config.directory || ""}`,
+      `./${config.directory + "/" || ""}`,
       `.${config.language}`
     );
     allFilePaths.forEach(function(filePath) {
@@ -207,7 +205,7 @@ function StartServer() {
         Object.keys(data).forEach(function(key) {
           const val = data[key];
 
-          fs.appendFileSync(`./${config.directory || ""}` + key, val, {
+          fs.appendFileSync(`./${config.directory + "/" || ""}` + key, val, {
             flag: "w"
           });
         });

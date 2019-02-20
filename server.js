@@ -199,7 +199,7 @@ function StartServer() {
       }
 
       //console.log(`got downLoadDir, allowDownload = ${allowDownload}`);
-      if (allowDownload) {
+      if (madeAllowDownloadDecision && allowDownload) {
         data = JSON.parse(data);
 
         Object.keys(data).forEach(function(key) {

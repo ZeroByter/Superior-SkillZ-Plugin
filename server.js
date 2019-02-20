@@ -87,7 +87,7 @@ function StartServer() {
   const watcher = watch(`./${config.directory}`, { recursive: true });
 
   const walkSync = function(dir, fileEnding, filelist) {
-    const files = fs.readdirSync(dir);
+    files = fs.readdirSync(dir);
     filelist = filelist || [];
     files.forEach(function(file) {
       if (fs.statSync(path.join(dir, file)).isDirectory()) {

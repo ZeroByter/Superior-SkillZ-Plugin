@@ -161,7 +161,7 @@ function StartServer(){
 		})
 
 		//user wants to download files from the webkit to our working station
-		socket.on("downLoadDir", function(data){
+		/*socket.on("downLoadDir", function(data){
 			if(!madeAllowDownloadDecision){
 				madeAllowDownloadDecision = true;
 				allowDownload = true;
@@ -177,6 +177,6 @@ function StartServer(){
 					fs.appendFileSync("./" + key, val, {flag: "w"})
 				});
 			}
-		})
+		})*/
 	})
 }
